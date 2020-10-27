@@ -1,15 +1,14 @@
 var Heroes = [{Name:"Yrgel", FK:20}, {Name:"Yzabilla", FK:16}]; //List of Heroes with Name, FK-Wert, Weapons
 var Marks = {Hero:0};
-
-//Check if run as part of index.html Creation or as main
 var IsMain = false;
-try {
-  document.getElementById("ScriptedHTML").innerHTML = "Testing"
-} catch (ReferenceError) {
-  IsMain = true
-};
 
 function main() {
+  //Check if run as part of index.html Creation or as main
+  try {
+    document.getElementById("ScriptedHTML").innerHTML = "Testing"
+  } catch (ReferenceError) {
+    IsMain = true
+  };
   Marks = LoadSavedData();
   RefreshHTML()
 };
@@ -21,11 +20,22 @@ function changeMark(Key, Value) {
 };
 
 function UpdateSavedData() {
-  sessionStorage.setItem("savedMarks", Marks)
+  if (IsMain == false) {
+    sessionStorage.setItem("savedMarks", Marks)
+  }
 };
 
 function LoadSavedData() {
-  return sessionStorage.getItem("savedMarks")
+  if (IsMain == false) {
+    let Load = sessionStorage.getItem("savedMarks")
+    if (typeof(Load) == object) {
+      return Load
+    } else {
+      return Marks
+    }
+  } else {
+    return Marks
+  }
 };
 
 function RefreshHTML () {
@@ -50,5 +60,4 @@ function RefreshHTML () {
   }
 };
 
-//Run and display result or pass to index.html
 main();
