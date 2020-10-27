@@ -21,18 +21,11 @@ function changeMark(Key, Value) {
 };
 
 function UpdateSavedData() {
-  try {
-    window.sessionStorage.setItem("savedMarks", Marks)
-  } catch (ReferenceError) {}
+  sessionStorage.setItem("savedMarks", Marks)
 };
 
 function LoadSavedData() {
-  let Temp = Marks;
-  try {
-    return window.sessionStorage.getItem("savedMarks")
-  } catch (ReferenceError) {
-    return Temp
-  }
+  return sessionStorage.getItem("savedMarks")
 };
 
 function RefreshHTML () {
