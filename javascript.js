@@ -4,11 +4,7 @@ var IsMain = false;
 
 function main() {
   //Check if run as part of index.html Creation or as main
-  try {
-    document.getElementById("ScriptedHTML").innerHTML = "Testing"
-  } catch (ReferenceError) {
-    IsMain = true
-  };
+  //try {document.getElementById("ScriptedHTML").innerHTML = "Testing"} catch (ReferenceError) {IsMain = true};
   Marks = LoadSavedData();
   RefreshHTML()
 };
