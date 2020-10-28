@@ -1,5 +1,5 @@
 .button {
-  font-size: 1rem;
+  font-size: 6mm;
   font-family: sans-serif;
   color: #ffffff;
   background-color: #202020;
@@ -9,7 +9,7 @@
   margin: 1px 1px
 }
 .buttonPressed {
-  font-size: 2rem;
+  font-size: 6mm;
   font-family: sans-serif;
   color: #ffff80;
   background-color: #101010;
@@ -24,18 +24,18 @@
   background-color: #000000;
 }
 .listItem {
-  font-size: 1rem;
+  font-size: 6mm;
   margin-left: -20px;
   margin-top: 4px
 }
 .headline {
-  font-size: 1rem;
+  font-size: 10mm;
 }
 .sum {
-  font-size: 1rem;
+  font-size: 8mm;
   color: #ffff80;
 }
 .footer {
-  font-size: 1rem;
+  font-size: 6mm;
   text-align: right;
 }
