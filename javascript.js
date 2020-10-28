@@ -29,8 +29,6 @@ var Zielkampfgetuemmel = [["Nein", 0], ["Ja", -2]];
 var ArmbrustUeberdrehen = [["Nein", 0], ["Ja", 1]];
 var PraeziserSchuss = [["Nein", 0, 0], ["Stufe 1", -2, 2], ["Stufe 2", -4, 4], ["Stufe 3", -6, 6]];
 var Zielen = [["Nein", 0], ["1 Aktion", 2], ["2 Aktionen", 4]];
-const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
-const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
 var IsMain = false;
 
 function main() {
