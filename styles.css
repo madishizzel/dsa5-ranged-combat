@@ -5,17 +5,17 @@
   background-color: #202020;
   border: 1px solid #404040;
   border-radius: 4px;
-  padding: 2px 4px;
+  padding: 4px 8px;
   margin: 1px 1px
 }
 .buttonPressed {
-  font-size: 1rem;
+  font-size: 2rem;
   font-family: sans-serif;
   color: #ffff80;
   background-color: #101010;
   border: 1px solid #404040;
   border-radius: 4px;
-  padding: 2px 4px;
+  padding: 4px 8px;
   margin: 1px 1px
 }
 .text {
