@@ -46,146 +46,159 @@ function changeMark(Key, Value) {
 };
 
 function printValue(Value) {
-  let output = "";
+  let Output = "";
   if (Value > 0) {
-    output += "+" + Value
+    Output += "+" + Value
   } else if (Value == 0) {
-    output += "&plusmn;0"
+    Output += "&plusmn;0"
   } else {
-    output += Value
+    Output += Value
   }
-  return output
+  return Output
+};
+
+function createButton(Action, Text, Clicked) {
+  let Output = "";
+  Output += ` <button class="`;
+  if (Clicked == 1) {
+    Output += "buttonPressed"
+  } else {
+    Output += "button"
+  }
+  Output += `" onclick="${Action}">${Text}</button>\n`;
+  return Output
 };
 
 function RefreshHTML() {
   let OutputHTML = "";
-  OutputHTML += "<ul>";
-  OutputHTML += `\n<li><b>Held:</b><br>\n`;
+  OutputHTML += "<ul>\n";
+  //Wahl des Helden
+  OutputHTML += `<li class="textBlock"><b>Held:</b><br>\n`;
   for (i in Helden) {
-    OutputHTML += `<button onclick='changeMark("Hero",${i})'>`;
     if (i == Marks.Hero){
-      OutputHTML += `<mark>${Helden[i].Name}</mark>`
+      OutputHTML += createButton(`changeMark('Hero',${i})`, `${Helden[i].Name}`, 1)
     } else {
-      OutputHTML += `${Helden[i].Name}`
+      OutputHTML += createButton(`changeMark('Hero',${i})`, `${Helden[i].Name}`, 0)
     };
-    OutputHTML += `</button>`
   };
+  OutputHTML += "</li>\n"
+  //Wahl der Waffe bzw. Munition
   let FK_Hero = Helden[Marks.Hero].Waffen[Marks.Weapon].FK;
   let TP_Weapon = Helden[Marks.Hero].Waffen[Marks.Weapon].TP;
-  OutputHTML += `\n<li><b>Waffe bzw. Munition:</b> (FK = ${FK_Hero} / TP = W6${printValue(TP_Weapon)})<br>\n`;
+  OutputHTML += `<li class="textBlock"><b>Waffe bzw. Munition:</b> (FK = ${FK_Hero} / TP = W6${printValue(TP_Weapon)})<br>\n`;
   for (i in Helden[Marks.Hero].Waffen) {
-    OutputHTML += `<button onclick='changeMark("Weapon",${i})'>`;
     if (i == Marks.Weapon) {
-      OutputHTML += `<mark>${Helden[Marks.Hero].Waffen[i].Name}</mark>`
+      OutputHTML += createButton(`changeMark('Weapon',${i})`, `${Helden[Marks.Hero].Waffen[i].Name}`, 1)
     } else {
-      OutputHTML += `${Helden[Marks.Hero].Waffen[i].Name}`
+      OutputHTML += createButton(`changeMark('Weapon',${i})`, `${Helden[Marks.Hero].Waffen[i].Name}`, 0)
     };
-    OutputHTML += `</button>`
   };
+  OutputHTML += "</li>\n"
+  //Entfernung zum Ziel
   let FK_Range = Reichweite[Marks.Range][1];
   let TP_Range = Reichweite[Marks.Range][2];
-  OutputHTML += `\n<li><b>Entfernung in Schritt:</b> (FK: ${printValue(FK_Range)} / TP: ${printValue(TP_Range)})<br>\n`;
+  OutputHTML += `<li class="textBlock"><b>Entfernung in Schritt:</b> (FK: ${printValue(FK_Range)} / TP: ${printValue(TP_Range)})<br>\n`;
   for (i = 0; i < Reichweite.length; i++) {
-    OutputHTML += `<button onclick='changeMark("Range",${i})'>`;
     if (i == Marks.Range) {
-      OutputHTML += `<mark>${Reichweite[i][0]}: &le;${Helden[Marks.Hero].Waffen[Marks.Weapon].Reichweite[i]}</mark>`
+      OutputHTML += createButton(`changeMark('Range',${i})`, `${Reichweite[i][0]}: &le;${Helden[Marks.Hero].Waffen[Marks.Weapon].Reichweite[i]}`, 1)
     } else {
-      OutputHTML += `${Reichweite[i][0]}: &le;${Helden[Marks.Hero].Waffen[Marks.Weapon].Reichweite[i]}`
+      OutputHTML += createButton(`changeMark('Range',${i})`, `${Reichweite[i][0]}: &le;${Helden[Marks.Hero].Waffen[Marks.Weapon].Reichweite[i]}`, 0)
     };
-    OutputHTML += `</button>`
   };
+  OutputHTML += "</li>\n"
+  //Größe des Ziels
   let FK_TargetSize = Zielgroesse[Marks.TargetSize][1];
-  OutputHTML += `\n<li><b>Ziel-Gr&ouml;&szlig;e:</b> (FK: ${printValue(FK_TargetSize)})<br>\n`;
+  OutputHTML += `<li class="textBlock"><b>Ziel-Gr&ouml;&szlig;e:</b> (FK: ${printValue(FK_TargetSize)})<br>\n`;
   for (i = 0; i < Zielgroesse.length; i++) {
-    OutputHTML += `<button onclick='changeMark("TargetSize",${i})'>`;
     if (i == Marks.TargetSize) {
-      OutputHTML += `<mark>${Zielgroesse[i][0]}</mark>`
+      OutputHTML += createButton(`changeMark('TargetSize',${i})`, `${Zielgroesse[i][0]}`, 1)
     } else {
-      OutputHTML += `${Zielgroesse[i][0]}`
+      OutputHTML += createButton(`changeMark('TargetSize',${i})`, `${Zielgroesse[i][0]}`, 0)
     };
-    OutputHTML += `</button>`
   };
+  OutputHTML += "</li>\n"
+  //Trefferzone anvisieren
   let FK_TargetZone = Zielzone[Marks.TargetZone][1];
   let FK_TargetZone2 = FK_TargetZone;
   if (Helden[Marks.Hero].KSF.GezielterSchuss == 1) {
     FK_TargetZone2 = Math.round(FK_TargetZone/2);
-    OutputHTML += `\n<li><b>Zielzone:</b> (FK: ${printValue(FK_TargetZone2)}) <i>halbiert durch KSF Gezielter Schuss</i><br>\n`
+    OutputHTML += `<li class="textBlock"><b>Zielzone:</b> (FK: ${printValue(FK_TargetZone2)}) <i>halbiert durch KSF Gezielter Schuss</i><br>\n`
   } else {
-    OutputHTML += `\n<li><b>Zielzone:</b> (FK: ${printValue(FK_TargetZone2)})<br>\n`
+    OutputHTML += `<li class="textBlock"><b>Zielzone:</b> (FK: ${printValue(FK_TargetZone2)})<br>\n`
   }
   for (i = 0; i < Zielzone.length; i++) {
-    OutputHTML += `<button onclick='changeMark("TargetZone",${i})'>`;
     if (i == Marks.TargetZone) {
-      OutputHTML += `<mark>${Zielzone[i][0]}</mark>`
+      OutputHTML += createButton(`changeMark('TargetZone',${i})`, `${Zielzone[i][0]}`, 1)
     } else {
-      OutputHTML += `${Zielzone[i][0]}`
+      OutputHTML += createButton(`changeMark('TargetZone',${i})`, `${Zielzone[i][0]}`, 0)
     };
-    OutputHTML += `</button>`
   };
+  OutputHTML += "</li>\n"
+  //Trefferzone anvisieren erleichtert bei überraschtem Ziel
   let FK_TargetSurprise = Zielueberrascht[Marks.TargetSurprise][1];
   if (Marks.TargetZone == 0) {
     FK_TargetSurprise = 0
   };
-  OutputHTML += `\n<li><b>Ziel &uuml;berrascht:</b> (FK: ${printValue(FK_TargetSurprise)})<br>\n`;
+  OutputHTML += `<li class="textBlock"><b>Ziel &uuml;berrascht:</b> (FK: ${printValue(FK_TargetSurprise)})<br>\n`;
   for (i = 0; i < Zielueberrascht.length; i++) {
-    OutputHTML += `<button onclick='changeMark("TargetSurprise",${i})'>`;
     if (i == Marks.TargetSurprise) {
-      OutputHTML += `<mark>${Zielueberrascht[i][0]}</mark>`
+      OutputHTML += createButton(`changeMark('TargetSurprise',${i})`, `${Zielueberrascht[i][0]}`, 1)
     } else {
-      OutputHTML += `${Zielueberrascht[i][0]}`
+      OutputHTML += createButton(`changeMark('TargetSurprise',${i})`, `${Zielueberrascht[i][0]}`, 0)
     };
-    OutputHTML += `</button>`
   };
+  OutputHTML += "</li>\n"
+  //Bewegung des Ziels
   let FK_TargetMovement = Zielbewegung[Marks.TargetMovement][1];
-  OutputHTML += `\n<li><b>Bewegung des Ziels (Schritt in letzter Handlung):</b> (FK: ${printValue(FK_TargetMovement)})<br>\n`;
+  OutputHTML += `<li class="textBlock"><b>Bewegung des Ziels (Schritt in letzter Handlung):</b> (FK: ${printValue(FK_TargetMovement)})<br>\n`;
   for (i = 0; i < Zielbewegung.length; i++) {
-    OutputHTML += `<button onclick='changeMark("TargetMovement",${i})'>`;
     if (i == Marks.TargetMovement) {
-      OutputHTML += `<mark>${Zielbewegung[i][0]}</mark>`
+      OutputHTML += createButton(`changeMark('TargetMovement',${i})`, `${Zielbewegung[i][0]}`, 1)
     } else {
-      OutputHTML += `${Zielbewegung[i][0]}`
+      OutputHTML += createButton(`changeMark('TargetMovement',${i})`, `${Zielbewegung[i][0]}`, 0)
     };
-    OutputHTML += `</button>`
   };
+  OutputHTML += "</li>\n"
+  //Bewegung des Schützen
   let FK_SelfMovement = Schuetzenbewegung[Marks.SelfMovement][1];
-  OutputHTML += `\n<li><b>Bewegung des Sch&uuml;tzen (Schritt in letzter Handlung):</b> (FK: ${printValue(FK_SelfMovement)})<br>\n`;
+  OutputHTML += `<li class="textBlock"><b>Bewegung des Sch&uuml;tzen (Schritt in letzter Handlung):</b> (FK: ${printValue(FK_SelfMovement)})<br>\n`;
   for (i = 0; i < Schuetzenbewegung.length; i++) {
-    OutputHTML += `<button onclick='changeMark("SelfMovement",${i})'>`;
     if (i == Marks.SelfMovement) {
-      OutputHTML += `<mark>${Schuetzenbewegung[i][0]}</mark>`
+      OutputHTML += createButton(`changeMark('SelfMovement',${i})`, `${Schuetzenbewegung[i][0]}`, 1)
     } else {
-      OutputHTML += `${Schuetzenbewegung[i][0]}`
+      OutputHTML += createButton(`changeMark('SelfMovement',${i})`, `${Schuetzenbewegung[i][0]}`, 0)
     };
-    OutputHTML += `</button>`
   };
+  OutputHTML += "</li>\n"
+  //Sichtverhältnisse
   let FK_Vision = Sicht[Marks.Vision][1];
-  OutputHTML += `\n<li><b>Sicht:</b> (FK: ${printValue(FK_Vision)})<br>\n`;
+  OutputHTML += `<li class="textBlock"><b>Sicht:</b> (FK: ${printValue(FK_Vision)})<br>\n`;
   for (i = 0; i < Sicht.length; i++) {
-    OutputHTML += `<button onclick='changeMark("Vision",${i})'>`;
     if (i == Marks.Vision) {
-      OutputHTML += `<mark>${Sicht[i][0]}</mark>`
+      OutputHTML += createButton(`changeMark('Vision',${i})`, `${Sicht[i][0]}`, 1)
     } else {
-      OutputHTML += `${Sicht[i][0]}`
+      OutputHTML += createButton(`changeMark('Vision',${i})`, `${Sicht[i][0]}`, 0)
     };
-    OutputHTML += `</button>`
   };
+  OutputHTML += "</li>\n"
+  //Schuss ins Zielkampfgetümmel
   let FK_TargetCombat = Zielkampfgetuemmel[Marks.TargetCombat][1];
   let FK_TargetCombat2 = FK_TargetCombat;
   if (Helden[Marks.Hero].KSF.Rueckendeckung == 1) {
     FK_TargetCombat2 = 0;
-    OutputHTML += `\n<li><b>Schuss ins Kampfget&uuml;mmel:</b> (FK: ${printValue(FK_TargetCombat2)}) <i>ignoriert durch eKSF R&uuml;ckendeckung</i><br>\n`
+    OutputHTML += `<li class="textBlock"><b>Schuss ins Kampfget&uuml;mmel:</b> (FK: ${printValue(FK_TargetCombat2)}) <i>ignoriert durch eKSF R&uuml;ckendeckung</i><br>\n`
   } else {
-    OutputHTML += `\n<li><b>Schuss ins Kampfget&uuml;mmel:</b> (FK: ${printValue(FK_TargetCombat2)})<br>\n`
+    OutputHTML += `<li class="textBlock"><b>Schuss ins Kampfget&uuml;mmel:</b> (FK: ${printValue(FK_TargetCombat2)})<br>\n`
   };
   for (i = 0; i < Zielkampfgetuemmel.length; i++) {
-    OutputHTML += `<button onclick='changeMark("TargetCombat",${i})'>`;
     if (i == Marks.TargetCombat) {
-      OutputHTML += `<mark>${Zielkampfgetuemmel[i][0]}</mark>`
+      OutputHTML += createButton(`changeMark('TargetCombat',${i})`, `${Zielkampfgetuemmel[i][0]}`, 1)
     } else {
-      OutputHTML += `${Zielkampfgetuemmel[i][0]}`
+      OutputHTML += createButton(`changeMark('TargetCombat',${i})`, `${Zielkampfgetuemmel[i][0]}`, 0)
     };
-    OutputHTML += `</button>`
   };
+  OutputHTML += "</li>\n"
+  //KSF Scharfschütze
   let FK_Sniper = 0;
   if (Helden[Marks.Hero].KSF.Scharfschuetze >= 1) {
     let SniperBonus = Helden[Marks.Hero].KSF.Scharfschuetze*2;
@@ -195,53 +208,54 @@ function RefreshHTML() {
     } else if (SniperSum < 0) {
       FK_Sniper = -SniperSum
     };
-    OutputHTML += `\n<li><b>KSF Scharfsch&uuml;tze:</b> (FK: ${printValue(FK_Sniper)})`
+    OutputHTML += `<li class="textBlock"><b>KSF Scharfsch&uuml;tze:</b> (FK: ${printValue(FK_Sniper)})</li>\n`
   };
+  //KSF Armbrust überdrehen
   let TP_Overwind = 0;
   if (Helden[Marks.Hero].KSF.ArmbrustUeberdrehen == 1) {
     TP_Overwind = ArmbrustUeberdrehen[Marks.Overwind][1];
-    OutputHTML += `\n<li><b>KSF Armbrust &Uuml;berdrehen:</b> (TP: ${TP_Overwind})<br>\n`;
+    OutputHTML += `<li class="textBlock"><b>KSF Armbrust &Uuml;berdrehen:</b> (TP: ${TP_Overwind})<br>\n`;
     for (i = 0; i < ArmbrustUeberdrehen.length; i++) {
-      OutputHTML += `<button onclick='changeMark("Overwind",${i})'>`;
       if (i == Marks.Overwind) {
-        OutputHTML += `<mark>${ArmbrustUeberdrehen[i][0]}</mark>`
+        OutputHTML += createButton(`changeMark('Overwind',${i})`, `${ArmbrustUeberdrehen[i][0]}`, 1)
       } else {
-        OutputHTML += `${ArmbrustUeberdrehen[i][0]}`
+        OutputHTML += createButton(`changeMark('Overwind',${i})`, `${ArmbrustUeberdrehen[i][0]}`, 0)
       };
-      OutputHTML += `</button>`
     };
   };
+  OutputHTML += "</li>\n"
+  //KSF Präziser Schuss
   let FK_PreciseShot = 0;
   let TP_PreciseShot = 0;
   if (Helden[Marks.Hero].KSF.PraeziserSchuss >= 1) {
     FK_PreciseShot = PraeziserSchuss[Marks.PreciseShot][1];
     TP_PreciseShot = PraeziserSchuss[Marks.PreciseShot][2];
-    OutputHTML += `\n<li><b>KSF Pr&auml;ziser Schuss:</b> (FK: ${printValue(FK_PreciseShot)} / TP: ${TP_PreciseShot})<br>\n`;
+    OutputHTML += `<li class="textBlock"><b>KSF Pr&auml;ziser Schuss:</b> (FK: ${printValue(FK_PreciseShot)} / TP: ${TP_PreciseShot})<br>\n`;
     for (i = 0; i < Helden[Marks.Hero].KSF.PraeziserSchuss+1; i++) {
-      OutputHTML += `<button onclick='changeMark("PreciseShot",${i})'>`;
       if (i == Marks.PreciseShot) {
-        OutputHTML += `<mark>${PraeziserSchuss[i][0]}</mark>`
+        OutputHTML += createButton(`changeMark('PreciseShot',${i})`, `${PraeziserSchuss[i][0]}`, 1)
       } else {
-        OutputHTML += `${PraeziserSchuss[i][0]}`
+        OutputHTML += createButton(`changeMark('PreciseShot',${i})`, `${PraeziserSchuss[i][0]}`, 0)
       };
-      OutputHTML += `</button>`
     };
   };
+  OutputHTML += "</li>\n"
+  //Zielen
   let FK_Aiming = Zielen[Marks.Aiming][1];
-  OutputHTML += `\n<li><b>Zielen:</b> (FK: ${printValue(FK_Aiming)})<br>\n`;
+  OutputHTML += `<li class="textBlock"><b>Zielen:</b> (FK: ${printValue(FK_Aiming)})<br>\n`;
   for (i = 0; i < Zielen.length; i++) {
-    OutputHTML += `<button onclick='changeMark("Aiming",${i})'>`;
     if (i == Marks.Aiming) {
-      OutputHTML += `<mark>${Zielen[i][0]}</mark>`
+      OutputHTML += createButton(`changeMark('Aiming',${i})`, `${Zielen[i][0]}`, 1)
     } else {
-      OutputHTML += `${Zielen[i][0]}`
+      OutputHTML += createButton(`changeMark('Aiming',${i})`, `${Zielen[i][0]}`, 0)
     };
-    OutputHTML += `</button>`
   };
+  OutputHTML += "</li>\n"
+  //Summieren
   OutputHTML += "</ul>";
   let FK_Sum = FK_Hero + FK_Range + FK_TargetSize + FK_TargetZone2 + FK_TargetSurprise + FK_TargetMovement + FK_SelfMovement + FK_Vision + FK_TargetCombat2 + FK_Sniper + FK_PreciseShot + FK_Aiming;
   let TP_Sum = TP_Weapon + TP_Range + TP_Overwind + TP_PreciseShot;
-  OutputHTML += `\n<h2>Summe: FK = ${FK_Sum} / TP = W6${printValue(TP_Sum)}</h2>`;
+  OutputHTML += `\n<div class="sum">Summe: FK = ${FK_Sum} / TP = W6${printValue(TP_Sum)}</div>`;
   if(IsMain) {
     console.log(OutputHTML)
   } else {
