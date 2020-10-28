@@ -2,8 +2,8 @@
   font-size: 16px;
   font-family: sans-serif;
   color: #ffffff;
-  background-color: #202020;
-  border: 1px solid #404040;
+  background-color: #404040;
+  border: 1px solid #808080;
   border-radius: 4px;
   min-height: 40px;
   min-width: 40px;
@@ -14,32 +14,37 @@
   font-size: 16px;
   font-family: sans-serif;
   color: #ffff80;
-  background-color: #101010;
-  border: 1px solid #404040;
+  background-color: #202020;
+  border: 1px solid #808080;
   border-radius: 4px;
   min-height: 40px;
   min-width: 40px;
   padding: 4px 4px;
   margin: 1px 1px
 }
-.text {
+.body {
   font-family: sans-serif;
   color: #ffffff;
   background-color: #000000;
   text-size-adjust: none;
 }
-.listItem {
-  font-size: 16px;
-  margin-top: 4px
-}
 .headline {
   font-size: 24px;
 }
+.list {
+  margin-top: 8px;
+  margin-bottom: 8px;
+  padding-left: 20px;
+}
+.listItem {
+  font-size: 16px;
+  margin-bottom: 4px;
+}
 .sum {
-  font-size: 20px;
+  font-size: 24px;
   color: #ffff80;
 }
 .footer {
   font-size: 16px;
-  text-align: right;
+  margin-top: 16px;
 }

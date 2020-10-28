@@ -11,8 +11,7 @@ var Helden = [
   },
   {Name:"Yzabilla",
   Waffen:[{Name:"Jagdbolzen", TP:6, Reichweite:[7, 31, 48], FK:16},
-    {Name:"Kettenbrecherbolzen", TP:7, Reichweite:[7, 31, 48], FK:16},
-    {Name:"Panzerbrecherbolzen", TP:7, Reichweite:[7, 31, 48], FK:16},
+    {Name:"Kettenbr.-/Panzerbr.-Bolzen", TP:7, Reichweite:[7, 31, 48], FK:16},
     {Name:"Kriegsbolzen", TP:8, Reichweite:[6, 28, 44], FK:16},
     {Name:"Singende Bolzen", TP:4, Reichweite:[6, 28, 44], FK:16}],
   KSF:{}
@@ -21,10 +20,10 @@ var Helden = [
 var Marks = {Hero:0, Weapon:0, Range:1, TargetSize:2, TargetZone:0, TargetSurprise:0, TargetMovement:1, SelfMovement:0, Vision:0, TargetCombat:0, Overwind:0, PreciseShot:0, Aiming:0};
 var Reichweite = [["Nah", 2, 1], ["Mittel", 0, 0], ["Weit", -2, -1]];
 var Zielgroesse = [["Winzig", -8], ["Klein", -4], ["Mittel", 0], ["Gro&szlig;", 4], ["Riesig", 8]];
-var Zielzone = [["ungezielt", 0], ["Kopf", -10], ["Torso", -4], ["Arme", -8], ["Beine", -8]];
+var Zielzone = [["ungezielt", 0], ["Kopf", -10], ["Torso", -4], ["Arme / Beine", -8]];
 var Zielueberrascht = [["Nein", 0], ["Ja", 2]];
-var Zielbewegung = [["Steht", 2], ["Leicht: &le;4", 0], ["Schnell: &ge;5", -2], ["Leicht &amp; schl&auml;gt Haken", -4], ["Schnell &amp; schl&auml;gt Haken", -6]];
-var Schuetzenbewegung = [["Steht", 0], ["Geht: &le;4", -2], ["Rennt: &ge;5", -4], ["Pferd im Schritt", -4], ["Pferd im Galopp", -8]];
+var Zielbewegung = [["Steht", 2], ["Leicht: &le;4", 0], ["Schnell: &ge;5", -2], ["&le;4 &amp; schl&auml;gt Haken", -4], ["&ge;5 &amp; schl&auml;gt Haken", -6]];
+var Schuetzenbewegung = [["Steht", 0], ["Geht: &le;4", -2], ["Rennt: &ge;5 / Pferd im Schritt", -4], ["Pferd im Galopp", -8]];
 var Sicht = [["Stufe 0", 0], ["Stufe 1", -2], ["Stufe 2", -4], ["Stufe 3", -6]];
 var Zielkampfgetuemmel = [["Nein", 0], ["Ja", -2]];
 var ArmbrustUeberdrehen = [["Nein", 0], ["Ja", 1]];
@@ -71,7 +70,7 @@ function createButton(Action, Text, Clicked) {
 
 function RefreshHTML() {
   let OutputHTML = "";
-  OutputHTML += "<ul>\n";
+  OutputHTML += `<ul class="list">\n`;
   //Wahl des Helden
   OutputHTML += `<li class="listItem">Held:<br>\n`;
   for (i in Helden) {
@@ -97,7 +96,7 @@ function RefreshHTML() {
   //Entfernung zum Ziel
   let FK_Range = Reichweite[Marks.Range][1];
   let TP_Range = Reichweite[Marks.Range][2];
-  OutputHTML += `<li class="listItem">Entfernung in Schritt: (FK: ${printValue(FK_Range)} / TP: ${printValue(TP_Range)})<br>\n`;
+  OutputHTML += `<li class="listItem">Entfernung zum Ziel: (FK: ${printValue(FK_Range)} / TP: ${printValue(TP_Range)})<br>\n`;
   for (i = 0; i < Reichweite.length; i++) {
     if (i == Marks.Range) {
       OutputHTML += createButton(`changeMark('Range',${i})`, `${Reichweite[i][0]}: &le;${Helden[Marks.Hero].Waffen[Marks.Weapon].Reichweite[i]}`, 1)
@@ -122,7 +121,7 @@ function RefreshHTML() {
   let FK_TargetZone2 = FK_TargetZone;
   if (Helden[Marks.Hero].KSF.GezielterSchuss == 1) {
     FK_TargetZone2 = Math.round(FK_TargetZone/2);
-    OutputHTML += `<li class="listItem">Zielzone: (FK: ${printValue(FK_TargetZone2)}) <i>halbiert durch KSF Gezielter Schuss</i><br>\n`
+    OutputHTML += `<li class="listItem">Zielzone: (FK: ${printValue(FK_TargetZone2)})<br><i>halbiert durch KSF Gezielter Schuss</i><br>\n`
   } else {
     OutputHTML += `<li class="listItem">Zielzone: (FK: ${printValue(FK_TargetZone2)})<br>\n`
   }
@@ -150,7 +149,7 @@ function RefreshHTML() {
   OutputHTML += "</li>\n"
   //Bewegung des Ziels
   let FK_TargetMovement = Zielbewegung[Marks.TargetMovement][1];
-  OutputHTML += `<li class="listItem">Bewegung des Ziels (Schritt in letzter Handlung): (FK: ${printValue(FK_TargetMovement)})<br>\n`;
+  OutputHTML += `<li class="listItem">Bewegung des Ziels: (FK: ${printValue(FK_TargetMovement)})<br>\n`;
   for (i = 0; i < Zielbewegung.length; i++) {
     if (i == Marks.TargetMovement) {
       OutputHTML += createButton(`changeMark('TargetMovement',${i})`, `${Zielbewegung[i][0]}`, 1)
@@ -161,7 +160,7 @@ function RefreshHTML() {
   OutputHTML += "</li>\n"
   //Bewegung des Schützen
   let FK_SelfMovement = Schuetzenbewegung[Marks.SelfMovement][1];
-  OutputHTML += `<li class="listItem">Bewegung des Sch&uuml;tzen (Schritt in letzter Handlung): (FK: ${printValue(FK_SelfMovement)})<br>\n`;
+  OutputHTML += `<li class="listItem">Bewegung des Sch&uuml;tzen: (FK: ${printValue(FK_SelfMovement)})<br>\n`;
   for (i = 0; i < Schuetzenbewegung.length; i++) {
     if (i == Marks.SelfMovement) {
       OutputHTML += createButton(`changeMark('SelfMovement',${i})`, `${Schuetzenbewegung[i][0]}`, 1)
@@ -186,7 +185,7 @@ function RefreshHTML() {
   let FK_TargetCombat2 = FK_TargetCombat;
   if (Helden[Marks.Hero].KSF.Rueckendeckung == 1) {
     FK_TargetCombat2 = 0;
-    OutputHTML += `<li class="listItem">Schuss ins Kampfget&uuml;mmel: (FK: ${printValue(FK_TargetCombat2)}) <i>ignoriert durch eKSF R&uuml;ckendeckung</i><br>\n`
+    OutputHTML += `<li class="listItem">Schuss ins Kampfget&uuml;mmel: (FK: ${printValue(FK_TargetCombat2)})<br><i>ignoriert durch eKSF R&uuml;ckendeckung</i><br>\n`
   } else {
     OutputHTML += `<li class="listItem">Schuss ins Kampfget&uuml;mmel: (FK: ${printValue(FK_TargetCombat2)})<br>\n`
   };
