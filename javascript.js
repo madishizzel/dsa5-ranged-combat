@@ -72,7 +72,6 @@ function createButton(Action, Text, Clicked) {
 
 function RefreshHTML() {
   let OutputHTML = "";
-  OutputHTML += `vw: ${vw} / vh: ${vh}`
   OutputHTML += `<ul class="list">\n`;
   //Wahl des Helden
   OutputHTML += `<li class="listItem">Held:<br>\n`;
