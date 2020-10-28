@@ -72,7 +72,8 @@ function RefreshHTML() {
   let OutputHTML = "";
   OutputHTML += `<ul class="list">\n`;
   //Wahl des Helden
-  OutputHTML += `<li class="listItem">Held:<br>\n`;
+  let FK_Hero = Helden[Marks.Hero].Waffen[Marks.Weapon].FK;
+  OutputHTML += `<li class="listItem">Held: (FK = ${FK_Hero})<br>\n`;
   for (i in Helden) {
     if (i == Marks.Hero){
       OutputHTML += createButton(`changeMark('Hero',${i})`, `${Helden[i].Name}`, 1)
@@ -82,9 +83,19 @@ function RefreshHTML() {
   };
   OutputHTML += "</li>\n"
   //Wahl der Waffe bzw. Munition
-  let FK_Hero = Helden[Marks.Hero].Waffen[Marks.Weapon].FK;
+  let FK_Weapon = 0;
   let TP_Weapon = Helden[Marks.Hero].Waffen[Marks.Weapon].TP;
-  OutputHTML += `<li class="listItem">Waffe bzw. Munition: (FK = ${FK_Hero} / TP = W6${printValue(TP_Weapon)})<br>\n`;
+  if (Helden[Marks.Hero].Name == "Yzabilla" || (Helden[Marks.Hero].Name == "Yrgel" && Helden[Marks.Hero].Waffen[Marks.Weapon].Name == "Balestrina")) {
+    if (Zielgroesse[Marks.TargetSize][1] + Zielzone[Marks.TargetZone][1] <= -4) {
+      FK_Weapon = 1;
+
+    }
+  }
+  if (FK_Weapon == 1) {
+    OutputHTML += `<li class="listItem">Waffe bzw. Munition: (FK: ${printValue(FK_Weapon)} / TP = W6${printValue(TP_Weapon)})<br><i>Waffenbonus f&uuml;r kleine / winzige Ziele</i><br>\n`
+  } else {
+    OutputHTML += `<li class="listItem">Waffe bzw. Munition: (TP = W6${printValue(TP_Weapon)})<br>\n`
+  };
   for (i in Helden[Marks.Hero].Waffen) {
     if (i == Marks.Weapon) {
       OutputHTML += createButton(`changeMark('Weapon',${i})`, `${Helden[Marks.Hero].Waffen[i].Name}`, 1)
@@ -118,12 +129,11 @@ function RefreshHTML() {
   OutputHTML += "</li>\n"
   //Trefferzone anvisieren
   let FK_TargetZone = Zielzone[Marks.TargetZone][1];
-  let FK_TargetZone2 = FK_TargetZone;
-  if (Helden[Marks.Hero].KSF.GezielterSchuss == 1) {
-    FK_TargetZone2 = Math.round(FK_TargetZone/2);
-    OutputHTML += `<li class="listItem">Zielzone: (FK: ${printValue(FK_TargetZone2)})<br><i>halbiert durch KSF Gezielter Schuss</i><br>\n`
+  if (Marks.TargetZone != 0 && Helden[Marks.Hero].KSF.GezielterSchuss == 1) {
+    FK_TargetZone = Math.round(FK_TargetZone/2);
+    OutputHTML += `<li class="listItem">Zielzone: (FK: ${printValue(FK_TargetZone)})<br><i>halbiert durch KSF Gezielter Schuss</i><br>\n`
   } else {
-    OutputHTML += `<li class="listItem">Zielzone: (FK: ${printValue(FK_TargetZone2)})<br>\n`
+    OutputHTML += `<li class="listItem">Zielzone: (FK: ${printValue(FK_TargetZone)})<br>\n`
   }
   for (i = 0; i < Zielzone.length; i++) {
     if (i == Marks.TargetZone) {
@@ -182,12 +192,11 @@ function RefreshHTML() {
   OutputHTML += "</li>\n"
   //Schuss ins Zielkampfgetümmel
   let FK_TargetCombat = Zielkampfgetuemmel[Marks.TargetCombat][1];
-  let FK_TargetCombat2 = FK_TargetCombat;
-  if (Helden[Marks.Hero].KSF.Rueckendeckung == 1) {
-    FK_TargetCombat2 = 0;
-    OutputHTML += `<li class="listItem">Schuss ins Kampfget&uuml;mmel: (FK: ${printValue(FK_TargetCombat2)})<br><i>ignoriert durch eKSF R&uuml;ckendeckung</i><br>\n`
+  if (Marks.TargetCombat != 0 && Helden[Marks.Hero].KSF.Rueckendeckung == 1) {
+    FK_TargetCombat = 0;
+    OutputHTML += `<li class="listItem">Schuss ins Kampfget&uuml;mmel: (FK: ${printValue(FK_TargetCombat)})<br><i>ignoriert durch eKSF R&uuml;ckendeckung</i><br>\n`
   } else {
-    OutputHTML += `<li class="listItem">Schuss ins Kampfget&uuml;mmel: (FK: ${printValue(FK_TargetCombat2)})<br>\n`
+    OutputHTML += `<li class="listItem">Schuss ins Kampfget&uuml;mmel: (FK: ${printValue(FK_TargetCombat)})<br>\n`
   };
   for (i = 0; i < Zielkampfgetuemmel.length; i++) {
     if (i == Marks.TargetCombat) {
@@ -201,7 +210,7 @@ function RefreshHTML() {
   let FK_Sniper = 0;
   if (Helden[Marks.Hero].KSF.Scharfschuetze >= 1) {
     let SniperBonus = Helden[Marks.Hero].KSF.Scharfschuetze*2;
-    let SniperSum = FK_Range + FK_TargetSize + FK_TargetZone2 + FK_TargetSurprise + FK_TargetMovement + FK_SelfMovement;
+    let SniperSum = FK_Range + FK_TargetSize + FK_TargetZone + FK_TargetSurprise + FK_TargetMovement + FK_SelfMovement;
     if (SniperSum <= -SniperBonus) {
       FK_Sniper = SniperBonus
     } else if (SniperSum < 0) {
@@ -241,7 +250,12 @@ function RefreshHTML() {
   OutputHTML += "</li>\n"
   //Zielen
   let FK_Aiming = Zielen[Marks.Aiming][1];
-  OutputHTML += `<li class="listItem">Zielen: (FK: ${printValue(FK_Aiming)})<br>\n`;
+  if (Marks.Aiming != 0 && Helden[Marks.Hero].Waffen[Marks.Weapon].Name == "Ball&auml;ster" && Helden[Marks.Hero].KSF.IrbraschStil == 1) {
+    FK_Aiming = FK_Aiming*2;
+    OutputHTML += `<li class="listItem">Zielen: (FK: ${printValue(FK_Aiming)})<br><i>verdoppelt durch Irbrasch-Stil</i><br>\n`;
+  } else {
+    OutputHTML += `<li class="listItem">Zielen: (FK: ${printValue(FK_Aiming)})<br>\n`
+  };
   for (i = 0; i < Zielen.length; i++) {
     if (i == Marks.Aiming) {
       OutputHTML += createButton(`changeMark('Aiming',${i})`, `${Zielen[i][0]}`, 1)
@@ -252,9 +266,15 @@ function RefreshHTML() {
   OutputHTML += "</li>\n"
   //Summieren
   OutputHTML += "</ul>";
-  let FK_Sum = FK_Hero + FK_Range + FK_TargetSize + FK_TargetZone2 + FK_TargetSurprise + FK_TargetMovement + FK_SelfMovement + FK_Vision + FK_TargetCombat2 + FK_Sniper + FK_PreciseShot + FK_Aiming;
+  let FK_Sum = FK_Hero + FK_Weapon + FK_Range + FK_TargetSize + FK_TargetZone + FK_TargetSurprise + FK_TargetMovement + FK_SelfMovement + FK_Vision + FK_TargetCombat + FK_Sniper + FK_PreciseShot + FK_Aiming;
   let TP_Sum = TP_Weapon + TP_Range + TP_Overwind + TP_PreciseShot;
   OutputHTML += `\n<div class="sum">Summe: FK = ${FK_Sum} / TP = W6${printValue(TP_Sum)}</div>`;
+  if (Helden[Marks.Hero].Waffen[Marks.Weapon].Name == "Ball&auml;ster") {
+    OutputHTML += `\ngegen V&ouml;gel: TP +1`;
+    if (Marks.Range == 0) {
+      OutputHTML += ` / bei Entfernung &le;5 Schritt: TP +2`;
+    }
+  }
   if(IsMain) {
     console.log(OutputHTML)
   } else {
