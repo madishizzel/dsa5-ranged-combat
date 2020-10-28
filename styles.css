@@ -1,41 +1,41 @@
 .button {
-  font-size: 16px;
+  font-size: 1rem;
   font-family: sans-serif;
   color: #ffffff;
   background-color: #202020;
   border: 1px solid #404040;
   border-radius: 4px;
-  padding: 2px 8px;
+  padding: 2px 4px;
   margin: 1px 1px
 }
 .buttonPressed {
-  font-size: 16px;
+  font-size: 1rem;
   font-family: sans-serif;
   color: #ffff80;
   background-color: #101010;
   border: 1px solid #404040;
   border-radius: 4px;
-  padding: 2px 8px;
+  padding: 2px 4px;
   margin: 1px 1px
 }
 .text {
   font-family: sans-serif;
   color: #ffffff;
-  background-color:#000000;
+  background-color: #000000;
 }
 .listItem {
-  font-size: 16px;
+  font-size: 1rem;
   margin-left: -20px;
   margin-top: 4px
 }
 .headline {
-  font-size: 24px;
+  font-size: 1rem;
 }
 .sum {
-  font-size: 20px;
+  font-size: 1rem;
   color: #ffff80;
 }
 .footer {
-  font-size: 16px;
+  font-size: 1rem;
   text-align: right;
 }
