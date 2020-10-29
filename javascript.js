@@ -10,20 +10,20 @@ var Helden = [
     IrbraschStil:1}
   },
   {Name:"Yzabilla",
-  Waffen:[{Name:"Jagdbolzen", Typ:"Balestrina", TP:6, Reichweite:[7, 31, 48], FK:16},
-    {Name:"Kettenbr.-/Panzerbr.-Bolzen", Typ:"Balestrina", TP:7, Reichweite:[7, 31, 48], FK:16},
-    {Name:"Kriegsbolzen", Typ:"Balestrina", TP:8, Reichweite:[6, 28, 44], FK:16},
-    {Name:"Singende Bolzen", Typ:"Balestrina", TP:4, Reichweite:[6, 28, 44], FK:16}],
+  Waffen:[{Name:"Jagd-B.", Typ:"Balestrina", TP:6, Reichweite:[7, 31, 48], FK:16},
+    {Name:"Kettenbr.-/Panzerbr.-B.", Typ:"Balestrina", TP:7, Reichweite:[7, 31, 48], FK:16},
+    {Name:"Kriegs-B.", Typ:"Balestrina", TP:8, Reichweite:[6, 28, 44], FK:16},
+    {Name:"Sing. B.", Typ:"Balestrina", TP:4, Reichweite:[6, 28, 44], FK:16}],
   KSF:{}
   }
 ];
 var Marks = {Hero:0, Weapon:0, Range:1, TargetSize:2, TargetZone:0, TargetSurprise:0, TargetMovement:1, SelfMovement:0, Vision:0, TargetCombat:0, Overwind:0, PreciseShot:0, Aiming:0};
 var Reichweite = [["Nah", 2, 1], ["Mittel", 0, 0], ["Weit", -2, -1]];
 var Zielgroesse = [["Winzig", -8], ["Klein", -4], ["Mittel", 0], ["Gro&szlig;", 4], ["Riesig", 8]];
-var Zielzone = [["ungezielt", 0], ["Kopf", -10], ["Torso", -4], ["Arme / Beine", -8]];
+var Zielzone = [["ungezielt", 0], ["Kopf", -10], ["Torso", -4], ["Arme", -8], ["Beine", -8]];
 var Zielueberrascht = [["Nein", 0], ["Ja", 2]];
-var Zielbewegung = [["Steht", 2], ["Leicht: &le;4", 0], ["Schnell: &ge;5", -2], ["&le;4 &amp; schl&auml;gt Haken", -4], ["&ge;5 &amp; schl&auml;gt Haken", -6]];
-var Schuetzenbewegung = [["Steht", 0], ["Geht: &le;4", -2], ["Rennt: &ge;5 / Pferd im Schritt", -4], ["Pferd im Galopp", -8]];
+var Zielbewegung = [["Steht", 2], ["&le;4", 0], ["&ge;5", -2], ["&le;4 &amp; schl. Haken", -4], ["&ge;5 &amp; schl. Haken", -6]];
+var Schuetzenbewegung = [["Steht", 0], ["&le;4", -2], ["&ge;5", -4], ["Pferd (Schritt)", -4], ["Pferd (Galopp)", -8]];
 var Sicht = [["Stufe 0", 0], ["Stufe 1", -2], ["Stufe 2", -4], ["Stufe 3", -6]];
 var Zielkampfgetuemmel = [["Nein", 0], ["Ja", -2]];
 var ArmbrustUeberdrehen = [["Nein", 0], ["Ja", 1]];
