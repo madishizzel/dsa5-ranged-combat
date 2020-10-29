@@ -158,7 +158,7 @@ function RefreshHTML() {
       OutputHTML += createButton(`changeMark('TargetSize',${i})`, `${Zielgroesse[i][0]}`, 0)
     }
   };
-  OutputHTML += `</li>\n<li class="listItem">Zielzone: (FK: ${printValue(FK_TargetZone)})<br>\n`;
+  OutputHTML += `</li>\n<li class="listItem">Trefferzone anvisieren (SM): (FK: ${printValue(FK_TargetZone)})<br>\n`;
   if (Marks.TargetZone != 0 && Helden[Marks.Hero].KSF.GezielterSchuss == 1) {
     OutputHTML += `<i>halbiert durch KSF Gezielter Schuss</i><br>\n`
   };
@@ -227,7 +227,7 @@ function RefreshHTML() {
     }
   };
   if (Helden[Marks.Hero].KSF.PraeziserSchuss == 1 || Helden[Marks.Hero].KSF.PraeziserSchuss == 2 || Helden[Marks.Hero].KSF.PraeziserSchuss == 3) {
-    OutputHTML += `</li>\n<li class="listItem">KSF Pr&auml;ziser Schuss: (FK: ${printValue(FK_PreciseShot)} / TP: ${printValue(TP_PreciseShot)})<br>\n`;
+    OutputHTML += `</li>\n<li class="listItem">KSF Pr&auml;ziser Schuss (BM): (FK: ${printValue(FK_PreciseShot)} / TP: ${printValue(TP_PreciseShot)})<br>\n`;
     for (i = 0; i < Helden[Marks.Hero].KSF.PraeziserSchuss+1; i++) {
       if (i == Marks.PreciseShot) {
         OutputHTML += createButton(`changeMark('PreciseShot',${i})`, `${PraeziserSchuss[i][0]}`, 1)

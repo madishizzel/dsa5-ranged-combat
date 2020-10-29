@@ -4,11 +4,10 @@
   color: #ffffff;
   background-color: #404040;
   border: 1px solid #808080;
-  border-radius: 4px;
+  border-radius: 5px;
   min-height: 30px;
-  min-width: 30px;
-  padding: 3px 3px;
-  margin: 1px 1px
+  min-width: 35px;
+  padding: 4px;
 }
 .buttonPressed {
   font-size: 14px;
@@ -16,11 +15,10 @@
   color: #ffff80;
   background-color: #202020;
   border: 1px solid #808080;
-  border-radius: 3px;
+  border-radius: 5px;
   min-height: 30px;
-  min-width: 30px;
-  padding: 3px 3px;
-  margin: 1px 1px
+  min-width: 35px;
+  padding: 4px;
 }
 .body {
   font-family: sans-serif;
@@ -34,7 +32,7 @@
 .list {
   margin-top: 4px;
   margin-bottom: 4px;
-  padding-left: 16px;
+  padding-left: 15px;
 }
 .listItem {
   font-size: 16px;
