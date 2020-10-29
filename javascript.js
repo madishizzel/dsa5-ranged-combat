@@ -222,7 +222,7 @@ function RefreshHTML() {
   let TP_Overwind = 0;
   if (Helden[Marks.Hero].KSF.ArmbrustUeberdrehen == 1) {
     TP_Overwind = ArmbrustUeberdrehen[Marks.Overwind][1];
-    OutputHTML += `<li class="listItem">KSF Armbrust &Uuml;berdrehen: (TP: ${TP_Overwind})<br>\n`;
+    OutputHTML += `<li class="listItem">KSF Armbrust &Uuml;berdrehen: (TP: ${printValue(TP_Overwind)})<br>\n`;
     for (i = 0; i < ArmbrustUeberdrehen.length; i++) {
       if (i == Marks.Overwind) {
         OutputHTML += createButton(`changeMark('Overwind',${i})`, `${ArmbrustUeberdrehen[i][0]}`, 1)
@@ -238,7 +238,7 @@ function RefreshHTML() {
   if (Helden[Marks.Hero].KSF.PraeziserSchuss >= 1) {
     FK_PreciseShot = PraeziserSchuss[Marks.PreciseShot][1];
     TP_PreciseShot = PraeziserSchuss[Marks.PreciseShot][2];
-    OutputHTML += `<li class="listItem">KSF Pr&auml;ziser Schuss: (FK: ${printValue(FK_PreciseShot)} / TP: ${TP_PreciseShot})<br>\n`;
+    OutputHTML += `<li class="listItem">KSF Pr&auml;ziser Schuss: (FK: ${printValue(FK_PreciseShot)} / TP: ${printValue(TP_PreciseShot)})<br>\n`;
     for (i = 0; i < Helden[Marks.Hero].KSF.PraeziserSchuss+1; i++) {
       if (i == Marks.PreciseShot) {
         OutputHTML += createButton(`changeMark('PreciseShot',${i})`, `${PraeziserSchuss[i][0]}`, 1)
