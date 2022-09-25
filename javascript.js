@@ -10,10 +10,10 @@ var Helden = [
     IrbraschStil:1}
   },
   {Name:"Yzabilla",
-  Waffen:[{Name:"Jagd-B.", Typ:"Balestrina", TP:6, Reichweite:[7, 31, 48], FK:16},
-    {Name:"Kettenbr.-/Panzerbr.-B.", Typ:"Balestrina", TP:7, Reichweite:[7, 31, 48], FK:16},
-    {Name:"Kriegs-B.", Typ:"Balestrina", TP:8, Reichweite:[6, 28, 44], FK:16},
-    {Name:"Sing. B.", Typ:"Balestrina", TP:4, Reichweite:[6, 28, 44], FK:16}],
+  Waffen:[{Name:"Jagd-B.", Typ:"Balestrina", TP:6, Reichweite:[7, 31, 48], FK:17},
+    {Name:"Kettenbr.-/Panzerbr.-B.", Typ:"Balestrina", TP:7, Reichweite:[7, 31, 48], FK:17},
+    {Name:"Kriegs-B.", Typ:"Balestrina", TP:8, Reichweite:[6, 28, 44], FK:17},
+    {Name:"Sing. B.", Typ:"Balestrina", TP:4, Reichweite:[6, 28, 44], FK:17}],
   KSF:{}
   }
 ];
